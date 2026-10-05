@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>つなぐリペア｜直す。その先の快適まで。</title>
+<meta name="description" content="パソコンが動かない、遅い、使い方がわからない。つなぐリペアが修理から設定までわかりやすくお手伝いします。基本診断無料。">
+<link rel="icon" href="assets/logo/symbol-color.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Barlow+Semi+Condensed:wght@500;700&display=swap" rel="stylesheet">
+<!-- CSS（上から順に読み込み） -->
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/sections.css">
+<link rel="stylesheet" href="css/motion.css">
+<script>
+(function(d){d.classList.add('js');
+try{var t=localStorage.getItem('tr-theme'),f=localStorage.getItem('tr-font');}catch(e){}
+if(!t){t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'night':'day';}
+d.setAttribute('data-theme',t);d.setAttribute('data-font',f||'m');
+})(document.documentElement);
+</script>
+</head>
+<body>
+<a class="skip" href="#main">本文へ進む</a>
+
+<!-- SVG sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="i-tool" viewBox="0 0 24 24"><path d="M14 6a4 4 0 005 5l-8 8a2 2 0 01-3-3l8-8a4 4 0 01-2-2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-data" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="7" ry="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5 6v12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V6M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="i-reload" viewBox="0 0 24 24"><path d="M19 12a7 7 0 11-2-5M19 4v4h-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M3 9a13 13 0 0118 0M6 12.5a8.5 8.5 0 0112 0M9 16a4 4 0 016 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="19" r="1.2" fill="currentColor"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4zM3 7l9 4 9-4M12 11v10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-laptop" viewBox="0 0 200 130"><rect x="38" y="14" width="124" height="80" rx="6" fill="none" stroke="currentColor" stroke-width="2.5"/><rect x="48" y="24" width="104" height="60" rx="2" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".5"/><path d="M18 100h164l-10 14H28z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M88 100v4h24v-4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="100" cy="54" r="12" fill="none" stroke="#B4CF5D" stroke-width="2.5"/><path d="M100 44v10" stroke="#B4CF5D" stroke-width="2.5" stroke-linecap="round"/></symbol>
+</svg>
+
+<!-- ===== mobile top bar ===== -->
+<header class="topbar">
+  <a class="brand" href="#top"><img class="logo logo-day" src="assets/logo/logo-color.svg" alt="つなぐリペア" width="134" height="30"><img class="logo logo-night" src="assets/logo/logo-white.svg" alt="つなぐリペア" width="134" height="30"></a>
+  <div class="head-actions">
+    <a class="btn btn-primary btn-sm" href="#contact"><svg><use href="#i-phone"/></svg>相談する</a>
+    <button class="menu-btn" type="button" aria-controls="drawer" aria-expanded="false"><span class="menu-txt">MENU</span><span class="menu-lines" aria-hidden="true"><i></i><i></i><i></i></span><span class="sr">メニューを開く</span></button>
+  </div>
+</header>
+
+
+<!-- ===== スマホ用：追従ドック（画面下部） ===== -->
+<div class="dock" aria-hidden="true">
+  <div class="dock-canvas"></div>
+  <div class="dock-info">
+    <b class="dock-num">01</b>
+    <span class="dock-text"><span class="dock-label">トップ</span><span class="dock-cap">直す。その先の快適まで。</span></span>
+  </div>
+  <div class="dock-bar"><i></i></div>
+</div>
+
+<div class="split" id="top">
+  <!-- ===== 固定パネル（左・58%） ===== -->
+  <aside class="panel-fixed" aria-label="ビジュアル">
+    <div class="fixed-header">
+      <a class="brand" href="#top"><img class="logo" src="assets/logo/logo-white.svg" alt="つなぐリペア" width="170" height="38"></a>
+      <div class="head-actions">
+        <a class="btn btn-primary btn-sm" href="#contact"><svg><use href="#i-phone"/></svg>電話で相談する</a>
+        <button class="menu-btn" type="button" aria-controls="drawer" aria-expanded="false"><span class="menu-txt">MENU</span><span class="menu-lines" aria-hidden="true"><i></i><i></i><i></i></span><span class="sr">メニューを開く</span></button>
+      </div>
+    </div>
+
+    <div class="stage" id="stage">
+      <!-- data-scene はスクロール側 section の id と対応 -->
+      <figure class="scene is-active" data-scene="hero">
+        <div class="fallback"><svg><use href="#i-laptop"/></svg></div>
+        <img src="assets/img/pc-circuit-board.jpg" alt="パソコンの基板と電子部品" style="object-position:center" decoding="async" onerror="this.remove()">
+        <figcaption class="scene-text"><p>直す。その先の快適まで。</p><p>修理・データ復旧・設定をひとつの窓口で。</p></figcaption>
+      </figure>
+      <figure class="scene" data-scene="symptoms">
+        <div class="fallback"><svg><use href="#i-laptop"/></svg></div>
+        <img src="assets/img/keyboard-backlit.jpg" alt="暗い部屋で光るキーボード" style="object-position:center" decoding="async" loading="lazy" onerror="this.remove()">
+        <figcaption class="scene-text"><p>いつもと違う。<br>そこから、ご相談を。</p><p>名前や原因がわからなくても大丈夫です。</p></figcaption>
+      </figure>
+      <figure class="scene" data-scene="services">
+        <div class="fallback"><svg><use href="#i-laptop"/></svg></div>
+        <img src="assets/img/pc-case-open.jpg" alt="側面を開けて修理中のデスクトップパソコン" style="object-position:center 40%" decoding="async" loading="lazy" onerror="this.remove()">
+        <figcaption class="scene-text"><p>細部まで、丁寧に直す。</p><p>部品の交換から、接続の確認まで。</p></figcaption>
+      </figure>
+      <figure class="scene" data-scene="why">
+        <div class="fallback"><svg><use href="#i-laptop"/></svg></div>
+        <img src="assets/img/cpu-socket.jpg" alt="マザーボードに取り付けられたCPU" style="object-position:center" decoding="async" loading="lazy" onerror="this.remove()">
+        <figcaption class="scene-text"><p>修理の前に、不安をなくす。</p><p>作業内容と料金を確認してから進めます。</p></figcaption>
+      </figure>
+      <figure class="scene" data-scene="pricing">
+        <div class="fallback"><svg><use href="#i-laptop"/></svg></div>
+        <img src="assets/img/laptop-white.jpg" alt="白い背景に置かれたノートパソコン" style="object-position:center" decoding="async" loading="lazy" onerror="this.remove()">
+        <figcaption class="scene-text"><p>基本診断は、0円。</p><p>正確な金額はお見積もりでご案内します。</p></figcaption>
+      </figure>
+      <figure class="scene" data-scene="flow">
+        <div class="fallback"><svg><use href="#i-laptop"/></svg></div>
+        <img src="assets/img/pc-tower.jpg" alt="内部が見えるデスクトップパソコン" style="object-position:35% center" decoding="async" loading="lazy" onerror="this.remove()">
+        <figcaption class="scene-text"><p>不調の原因を、確かめる。</p><p>状態に合わせた修理をご案内。</p></figcaption>
+      </figure>
+      <figure class="scene" data-scene="voice">
+        <div class="fallback"><svg><use href="#i-laptop"/></svg></div>
+        <img src="assets/img/desk-setup.jpg" alt="整ったデスクで快適に使えるパソコン" style="object-position:center" decoding="async" loading="lazy" onerror="this.remove()">
+        <figcaption class="scene-text"><p>再び、快適な毎日へ。</p><p>安心して使える状態を目指して。</p></figcaption>
+      </figure>
+      <figure class="scene" data-scene="faq">
+        <div class="fallback"><svg><use href="#i-laptop"/></svg></div>
+        <img src="assets/img/desk-imac.jpg" alt="デスクに置かれたパソコン" style="object-position:center" decoding="async" loading="lazy" onerror="this.remove()">
+        <figcaption class="scene-text"><p>わからないことは、<br>そのままで大丈夫。</p><p>専門用語を使わずにご説明します。</p></figcaption>
+      </figure>
+      <figure class="scene" data-scene="contact">
+        <div class="fallback"><svg><use href="#i-laptop"/></svg></div>
+        <img src="assets/img/pc-circuit-board.jpg" alt="パソコンの基板と電子部品" style="object-position:center" decoding="async" loading="lazy" onerror="this.remove()">
+        <figcaption class="scene-text"><p>パソコンの不調は、<br>まずはご相談。</p><p>今の症状をお聞かせください。</p></figcaption>
+      </figure>
+    </div>
+
+    <nav class="index" aria-label="ページ内の位置">
+      <p class="index-count"><b id="idx-now">01</b> / <span id="idx-total">09</span></p>
+      <ol id="idx-list"></ol>
+      <p class="index-label" id="idx-label">トップ</p>
+    </nav>
+  </aside>
+
+  <!-- ===== スクロールパネル（右・42%） ===== -->
+  <main class="panel-scroll" id="main">
+
+    <!-- 01 HERO -->
+    <section class="section hero" id="hero" data-label="トップ">
+      <p class="hero-kicker">パソコン修理・設定サポート</p>
+      <h1>壊れたパソコン、<span>つなぐリペアに</span>お任せください。</h1>
+      <p class="hero-lead">電源が入らない、データが消えた、画面が割れた。原因がわからなくても大丈夫。困っていることから、いっしょに確認します。</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#contact"><svg><use href="#i-phone"/></svg>電話で相談する</a>
+        <a class="btn btn-ghost" href="#contact"><svg><use href="#i-chat"/></svg>LINEで相談する</a>
+      </div>
+      <ul class="assure">
+        <li><b>基本診断無料</b><small>まずはお気軽にご相談</small></li>
+        <li><b>料金を事前に確認</b><small>修理を始める前にお見積もり</small></li>
+        <li><b>わかりやすく説明</b><small>専門用語を使わずにご案内</small></li>
+        <li><b>データに配慮</b><small>影響する作業は事前にお伝え</small></li>
+      </ul>
+    </section>
+
+    <!-- 02 SYMPTOMS -->
+    <section class="section" id="symptoms" data-label="こんな症状">
+      <div class="sec-head"><span class="sec-num">02</span><span class="sec-en">SYMPTOMS</span></div>
+      <h2 class="sec-title">こんな症状、<br>ありませんか？</h2>
+      <p class="sec-lead">気になる項目を押すと、よくある症状が開きます。</p>
+      <figure class="sec-img"><img src="assets/img/desk-imac.jpg" alt="いつも使っているデスクのパソコン" loading="lazy" decoding="async" onerror="this.remove()"><figcaption>assets/img/desk-imac.jpg</figcaption></figure>
+      <div class="acc">
+        <details open>
+          <summary><span class="no">01</span><span class="t">電源が入らない・起動しない</span><span class="pm" aria-hidden="true"></span></summary>
+          <div class="acc-body"><ul><li>電源ボタンを押しても動かない</li><li>起動せず、黒い画面のまま</li><li>再起動をくり返してしまう</li><li>使っている途中で電源が落ちる</li></ul><a href="#contact">この症状について相談する</a></div>
+        </details>
+        <details>
+          <summary><span class="no">02</span><span class="t">動きが遅い・途中で固まる</span><span class="pm" aria-hidden="true"></span></summary>
+          <div class="acc-body"><ul><li>パソコンの動きが遅い</li><li>画面が固まって動かなくなる</li><li>作業中に止まってしまう</li><li>アプリが開くまで時間がかかる</li></ul><a href="#contact">この症状について相談する</a></div>
+        </details>
+        <details>
+          <summary><span class="no">03</span><span class="t">画面が映らない・割れている</span><span class="pm" aria-hidden="true"></span></summary>
+          <div class="acc-body"><ul><li>電源は入るのに画面が映らない</li><li>画面が割れてしまった</li><li>画面に線が入る</li><li>画面がちらついて見づらい</li></ul><a href="#contact">この症状について相談する</a></div>
+        </details>
+        <details>
+          <summary><span class="no">04</span><span class="t">ネット・プリンターにつながらない</span><span class="pm" aria-hidden="true"></span></summary>
+          <div class="acc-body"><ul><li>Wi-Fiにつながらない</li><li>インターネットがよく切れる</li><li>プリンターで印刷できない</li><li>つないだ機器が使えない</li></ul><a href="#contact">この症状について相談する</a></div>
+        </details>
+        <details>
+          <summary><span class="no">05</span><span class="t">データが消えた・設定がわからない</span><span class="pm" aria-hidden="true"></span></summary>
+          <div class="acc-body"><ul><li>大切な写真や書類が見つからない</li><li>初めての設定がわからない</li><li>USBメモリやSDカードが開けない</li><li>パスワードの再設定を相談したい</li></ul><a href="#contact">この症状について相談する</a></div>
+        </details>
+        <details>
+          <summary><span class="no">06</span><span class="t">変な警告が出た・ウイルスが心配</span><span class="pm" aria-hidden="true"></span></summary>
+          <div class="acc-body"><ul><li>ウイルスに感染していないか心配</li><li>突然、警告画面が出てきた</li><li>身に覚えのない請求画面が出る</li></ul><p class="warn">画面に出てきた電話番号にはかけず、まずはご相談ください。</p><a href="#contact">この症状について相談する</a></div>
+        </details>
+      </div>
+      <p class="note">少しでも気になる症状があれば、お気軽にご相談ください。</p>
+    </section>
+
+    <!-- 03 SERVICES -->
+    <section class="section" id="services" data-label="サービス内容">
+      <div class="sec-head"><span class="sec-num">03</span><span class="sec-en">SERVICES</span></div>
+      <h2 class="sec-title">修理から、設定まで。</h2>
+      <p class="sec-lead">直すだけでなく、また安心して使えるところまで。</p>
+      <figure class="sec-img"><img src="assets/img/pc-tower.jpg" alt="内部まで確認できるデスクトップパソコン" loading="lazy" decoding="async" onerror="this.remove()"><figcaption>assets/img/pc-tower.jpg</figcaption></figure>
+      <ul class="svc">
+        <li><h3><svg><use href="#i-tool"/></svg>パソコンの修理・部品交換</h3><p>割れた画面や、持ちが悪くなった電池を交換。動きを速くする部品交換もご相談ください。</p><small>画面・キーボード・バッテリーなど</small></li>
+        <li><h3><svg><use href="#i-data"/></svg>大切なデータの復旧</h3><p>消えてしまった写真や書類、開けなくなったデータ。状態を確認して、取り出せるかお調べします。</p><small>写真・書類・USBメモリなど</small></li>
+        <li><h3><svg><use href="#i-shield"/></svg>ウイルス・警告画面の対応</h3><p>突然の警告や不審な画面の原因を確認。ウイルスの除去と、安全に使うための対策を行います。</p><small>不審な表示・セキュリティ対策</small></li>
+        <li><h3><svg><use href="#i-reload"/></svg>初期設定・入れ直し</h3><p>買ったばかりのパソコンの設定や、Windows・Macの入れ直しをお手伝いします。</p><small>使い始め・調子が悪いときに</small></li>
+        <li><h3><svg><use href="#i-wifi"/></svg>ネット・プリンターの設定</h3><p>インターネットがつながらない、印刷できない。ご自宅や職場の接続のお困りごとに対応します。</p><small>Wi-Fi・プリンター・周辺機器</small></li>
+        <li><h3><svg><use href="#i-box"/></svg>宅配での修理</h3><p>持ち運びが難しいときは、宅配修理も。送り方やお預かりの流れを、事前にご案内します。</p><small>発送する前にご相談ください</small></li>
+      </ul>
+      <p class="note">一覧にないお困りごとも、ご相談ください。</p>
+    </section>
+
+    <!-- 04 WHY -->
+    <section class="section" id="why" data-label="選ばれる理由">
+      <div class="sec-head"><span class="sec-num">04</span><span class="sec-en">OUR APPROACH</span></div>
+      <h2 class="sec-title">修理の前に、<br>不安をなくす。</h2>
+      <p class="sec-lead">使い続けたいパソコンと、大切なデータ。状況を確認し、必要な対応をご提案します。</p>
+      <figure class="sec-img"><img src="assets/img/laptop-white.jpg" alt="きれいな状態に戻ったノートパソコン" loading="lazy" decoding="async" onerror="this.remove()"><figcaption>assets/img/laptop-white.jpg</figcaption></figure>
+      <ol class="why">
+        <li><span class="n">01</span><h3>症状を丁寧に確認。</h3><p>「どこがおかしいか、わからない」からで大丈夫。使っていたときの様子を、ゆっくりお聞きします。</p></li>
+        <li><span class="n">02</span><h3>作業と料金を明確に。</h3><p>むずかしい専門用語は、できるだけ使いません。作業内容も料金も、納得いただいてから進めます。</p></li>
+        <li><span class="n">03</span><h3>大切なデータに配慮。</h3><p>写真や書類など、残しておきたいデータを確認。データに影響する作業は、事前にご案内します。</p></li>
+      </ol>
+    </section>
+
+    <!-- 05 PRICE -->
+    <section class="section" id="pricing" data-label="料金">
+      <div class="sec-head"><span class="sec-num">05</span><span class="sec-en">PRICE GUIDE</span></div>
+      <h2 class="sec-title">修理前に、<br>料金を確認。</h2>
+      <div class="free">
+        <strong>基本診断<em>0</em>円</strong>
+        <p>まずはパソコンの状態を確認。詳しい検査が必要な場合は、事前にご案内します。</p>
+      </div>
+      <h3 class="price-h">修理料金の目安<small>すべて税込</small></h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">サービス内容</th><th scope="col">料金</th></tr></thead>
+          <tbody>
+            <tr><td>液晶パネル交換<small>ノートパソコン</small></td><td>¥15,000〜</td></tr>
+            <tr><td>HDDからSSDへの交換<small>動きを速くする部品交換</small></td><td>¥12,000〜</td></tr>
+            <tr><td>バッテリー交換</td><td>¥8,000〜</td></tr>
+            <tr><td>基本ソフトの入れ直し<small>OS再インストール</small></td><td>¥9,800〜</td></tr>
+            <tr><td>ウイルス除去</td><td>¥8,800〜</td></tr>
+            <tr><td>データ復旧<small>軽度の障害</small></td><td>¥18,000〜</td></tr>
+            <tr><td>水濡れ後の分解・洗浄</td><td>¥15,000〜</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">部品代・機種・作業内容により料金は変わります。正確な金額は、お見積もりでご案内します。</p>
+    </section>
+
+    <!-- 06 FLOW -->
+    <section class="section" id="flow" data-label="ご利用の流れ">
+      <div class="sec-head"><span class="sec-num">06</span><span class="sec-en">FLOW</span></div>
+      <h2 class="sec-title">ご利用の流れ</h2>
+      <ol class="flow">
+        <li><h3>ご相談</h3><p>電話またはLINEで、今の症状をお聞かせください。メーカーや困っている様子がわかるとスムーズです。</p></li>
+        <li><h3>無料診断</h3><p>パソコンの状態を確認し、不調の原因を調べます。</p></li>
+        <li><h3>お見積もり・ご説明</h3><p>必要な作業と料金をわかりやすくご案内。納得いただいてから修理を始めます。</p></li>
+        <li><h3>修理・お渡し</h3><p>作業後に動作を確認し、安心して使える状態でお返しします。</p></li>
+      </ol>
+    </section>
+
+    <!-- 07 VOICE -->
+    <section class="section" id="voice" data-label="お客様の声">
+      <div class="sec-head"><span class="sec-num">07</span><span class="sec-en">VOICE</span></div>
+      <h2 class="sec-title">お客様の声</h2>
+      <ul class="voice">
+        <li><b>[お客様の声タイトル]</b>[ご利用いただいたお客様のコメントが入ります]<br>[年代・地域／ご依頼内容]</li>
+        <li><b>[お客様の声タイトル]</b>[ご利用いただいたお客様のコメントが入ります]<br>[年代・地域／ご依頼内容]</li>
+        <li><b>[お客様の声タイトル]</b>[ご利用いただいたお客様のコメントが入ります]<br>[年代・地域／ご依頼内容]</li>
+      </ul>
+    </section>
+
+    <!-- 08 FAQ -->
+    <section class="section" id="faq" data-label="よくある質問">
+      <div class="sec-head"><span class="sec-num">08</span><span class="sec-en">FAQ</span></div>
+      <h2 class="sec-title">よくある質問</h2>
+      <div class="faq">
+        <details><summary><span>診断だけでも料金はかかりますか？</span><i class="pm" aria-hidden="true"></i></summary><p>基本診断は無料です。詳しい検査が必要な場合は、事前にご案内します。</p></details>
+        <details><summary><span>修理代はいつ決まりますか？</span><i class="pm" aria-hidden="true"></i></summary><p>状態を確認したうえでお見積もりをお伝えし、納得いただいてから修理を始めます。</p></details>
+        <details><summary><span>パソコンの中のデータは消えませんか？</span><i class="pm" aria-hidden="true"></i></summary><p>残しておきたいデータを事前に確認します。データに影響する作業は、必ず前もってご案内します。</p></details>
+        <details><summary><span>お店に行けなくても依頼できますか？</span><i class="pm" aria-hidden="true"></i></summary><p>宅配修理にも対応しています。送り方やお預かりの流れは、発送前にご案内します。</p></details>
+      </div>
+    </section>
+
+    <!-- 09 CONTACT -->
+    <section class="section" id="contact" data-label="ご相談窓口">
+      <div class="sec-head"><span class="sec-num">09</span><span class="sec-en">CONTACT</span></div>
+      <h2 class="sec-title">パソコンのお困りごとを、<br>ご相談ください。</h2>
+      <div class="contact-box">
+        <p>うまく説明できなくても大丈夫。今の症状をお聞かせください。</p>
+        <div class="btns">
+          <a class="btn btn-primary" href="tel:[電話番号]"><svg><use href="#i-phone"/></svg>電話で相談する</a>
+          <a class="btn btn-ghost" href="[LINE URL]"><svg><use href="#i-chat"/></svg>LINEで相談する</a>
+        </div>
+        <small>受付時間：[受付時間] ／ 定休日：[定休日]</small>
+      </div>
+    </section>
+
+    <!-- 10 FOOTER -->
+    <footer class="foot">
+      <a class="brand" href="#top"><img class="logo logo-day" src="assets/logo/logo-color.svg" alt="つなぐリペア" width="197" height="44"><img class="logo logo-night" src="assets/logo/logo-white.svg" alt="つなぐリペア" width="197" height="44"></a>
+      <dl>
+        <dt>所在地</dt><dd>[住所]</dd>
+        <dt>電話</dt><dd>[電話番号]</dd>
+        <dt>営業時間</dt><dd>[営業時間]</dd>
+      </dl>
+      <p class="copy">© 2026 つなぐリペア</p>
+    </footer>
+  </main>
+</div>
+
+
+<!-- ===== ハンバーガーメニュー ===== -->
+<div class="drawer-overlay" data-close hidden></div>
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="メニュー" hidden>
+  <div class="drawer-head">
+    <span class="brand"><img class="logo logo-day" src="assets/logo/logo-color.svg" alt="つなぐリペア" width="134" height="30"><img class="logo logo-night" src="assets/logo/logo-white.svg" alt="つなぐリペア" width="134" height="30"></span>
+    <button class="drawer-close" type="button" data-close aria-label="メニューを閉じる"><span aria-hidden="true"></span></button>
+  </div>
+
+  <nav class="drawer-nav" aria-label="ページ内メニュー">
+    <ol>
+      <li><a href="#hero"><span>01</span>トップ</a></li>
+      <li><a href="#symptoms"><span>02</span>こんな症状</a></li>
+      <li><a href="#services"><span>03</span>サービス内容</a></li>
+      <li><a href="#why"><span>04</span>選ばれる理由</a></li>
+      <li><a href="#pricing"><span>05</span>料金</a></li>
+      <li><a href="#flow"><span>06</span>ご利用の流れ</a></li>
+      <li><a href="#voice"><span>07</span>お客様の声</a></li>
+      <li><a href="#faq"><span>08</span>よくある質問</a></li>
+      <li><a href="#contact"><span>09</span>ご相談窓口</a></li>
+    </ol>
+  </nav>
+
+  <div class="drawer-settings">
+    <div class="setting" role="group" aria-labelledby="set-font">
+      <p class="setting-h" id="set-font">文字サイズ</p>
+      <div class="seg">
+        <button type="button" data-font="s" aria-pressed="false"><span class="fs-s">A</span>小</button>
+        <button type="button" data-font="m" aria-pressed="false"><span class="fs-m">A</span>標準</button>
+        <button type="button" data-font="l" aria-pressed="false"><span class="fs-l">A</span>大</button>
+      </div>
+    </div>
+    <div class="setting" role="group" aria-labelledby="set-theme">
+      <p class="setting-h" id="set-theme">表示モード</p>
+      <div class="seg">
+        <button type="button" data-theme-set="day" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>デイ</button>
+        <button type="button" data-theme-set="night" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 14.5A8 8 0 019.5 4.5a8 8 0 1010 10z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>ナイト</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="drawer-cta">
+    <a class="btn btn-primary" href="#contact" data-close-link><svg><use href="#i-phone"/></svg>電話で相談する</a>
+    <a class="btn btn-ghost" href="#contact" data-close-link><svg><use href="#i-chat"/></svg>LINEで相談する</a>
+  </div>
+</div>
+
+<script src="js/main.js" defer></script>
+<script src="js/circuit.js" defer></script>
+</body>
+</html>

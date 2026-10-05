@@ -1,0 +1,221 @@
+/* #########################################################
+   motion.css
+   動き：読み込み・スクロール・左パネルの切替
+
+   目次
+   - 動き
+   ######################################################### */
+
+
+/* =========================================================
+   動き（js/main.js がクラスを付け外し）
+   1. 読み込み時の表示演出 … html.is-loaded
+   2. スクロールでフェードイン … .reveal → .is-in
+   3. 左パネルのズーム・文字切替 … .scene.is-active
+   4. 細かい動き（アニメーションの定義）
+   ※ ボタン・カードのホバーは各パーツのファイルにあります
+   ※ html.js は JS が動くときだけ付くので、JSがなくても表示は消えません
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1. 読み込み時：上から順に表示
+   --------------------------------------------------------- */
+.js .topbar,
+.js .fixed-header,
+.js .stage,
+.js .index,
+.js .hero > * {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.js .stage {
+  transform: none;
+  transition-duration: 1.2s;
+}
+
+.js.is-loaded .topbar,
+.js.is-loaded .fixed-header,
+.js.is-loaded .stage,
+.js.is-loaded .index,
+.js.is-loaded .hero > * {
+  opacity: 1;
+  transform: none;
+}
+
+/* 表示する順番（遅延） */
+.js.is-loaded .topbar {
+  transition-delay: 0s;
+}
+
+.js.is-loaded .stage {
+  transition-delay: .05s;
+}
+
+.js.is-loaded .fixed-header {
+  transition-delay: .25s;
+}
+
+.js.is-loaded .hero > :nth-child(1) {
+  transition-delay: .35s;
+}
+
+.js.is-loaded .hero > :nth-child(2) {
+  transition-delay: .5s;
+}
+
+.js.is-loaded .hero > :nth-child(3) {
+  transition-delay: .65s;
+}
+
+.js.is-loaded .hero > :nth-child(4) {
+  transition-delay: .8s;
+}
+
+.js.is-loaded .hero > :nth-child(5) {
+  transition-delay: .95s;
+}
+
+.js.is-loaded .index {
+  transition-delay: 1s;
+}
+
+/* ---------------------------------------------------------
+   2. スクロール：画面に入ったらふわっと表示
+   --i は同じグループ内の順番（JSが設定、80msずつずらす）
+   --------------------------------------------------------- */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+
+.js .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* 画像は下から広がるように */
+.js .sec-img.reveal {
+  transform: none;
+  clip-path: inset(0 0 8% 0);
+}
+
+.js .sec-img.reveal.is-in {
+  clip-path: inset(0 0 0 0);
+  transition-property: opacity, clip-path;
+}
+
+/* ---------------------------------------------------------
+   3. 左パネル：写真のゆっくりズーム・キャプションの入れ替え
+   --------------------------------------------------------- */
+.scene img,
+.scene .fallback svg {
+  transform: scale(1.07);
+  transition: transform 7s linear;
+}
+
+.scene.is-active img,
+.scene.is-active .fallback svg {
+  transform: scale(1);
+}
+
+.scene-text p {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .6s var(--ease), transform .6s var(--ease);
+}
+
+.scene.is-active .scene-text p {
+  opacity: 1;
+  transform: none;
+}
+
+.scene.is-active .scene-text p:first-child {
+  transition-delay: .25s;
+}
+
+.scene.is-active .scene-text p:last-child {
+  transition-delay: .4s;
+}
+
+/* 進捗ナビの番号・ラベル */
+.index-count b {
+  display: inline-block;
+  transition: opacity .3s, transform .3s;
+}
+
+.index-count b.is-changing {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+.index-label {
+  transition: opacity .3s;
+}
+
+.index-label.is-changing {
+  opacity: 0;
+}
+
+/* ---------------------------------------------------------
+   4. アニメーションの定義
+   --------------------------------------------------------- */
+
+/* アコーディオン・FAQを開いたとき */
+@keyframes openIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 「基本診断 0円」の 0 が弾む */
+.free.is-in strong em {
+  animation: pop .6s .4s var(--ease) both;
+}
+
+@keyframes pop {
+  0% {
+    opacity: 0;
+    transform: scale(.6);
+  }
+
+  70% {
+    transform: scale(1.08);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ---------------------------------------------------------
+   動きを減らす設定：最初から表示した状態にする
+   --------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .js .topbar,
+  .js .fixed-header,
+  .js .stage,
+  .js .index,
+  .js .hero > *,
+  .js .reveal,
+  .scene-text p {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+
+  .scene img,
+  .scene .fallback svg {
+    transform: none !important;
+  }
+}

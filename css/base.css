@@ -1,0 +1,327 @@
+/* #########################################################
+   base.css
+   ベース：変数・共通要素・ボタン・ロゴ
+
+   目次
+   - 変数
+   - ベース
+   - ボタン
+   - ロゴ
+   ######################################################### */
+
+
+/* =========================================================
+   変数（色・書体・動き）
+   - 色はすべてここで管理します
+   - ナイトモードは html[data-theme="night"] で上書き
+   - 文字サイズは html[data-font] で切り替え
+   ========================================================= */
+
+/* ---------- デイモード（標準） ---------- */
+:root {
+  /* ブランドカラー（ロゴのブランドボードより） */
+  --navy: #1C2F67;          /* 見出し・罫線 */
+  --navy-fill: #1C2F67;     /* 白文字を乗せる紺の面 */
+  --navy-deep: #131B36;     /* 左パネル・ドックの背景 */
+  --lime: #B4CF5D;          /* アクセント・ボタン */
+  --lime-hover: #A2BE4B;    /* ボタンのホバー */
+  --lime-soft: #EEF3D3;     /* アイコンの背景 */
+  --lime-ink: #5F7A0E;      /* 文字に使うライム（読みやすい濃さ） */
+
+  /* 背景・文字 */
+  --bg: #F5F5F2;
+  --panel: #FFFFFF;
+  --ink: #1F2433;
+  --ink-soft: #5B6273;
+  --line: #D5D9E0;
+  --line-strong: #9DA5B5;
+
+  /* パーツ用 */
+  --sub: #ECEDEE;           /* アコーディオンの中身など */
+  --th: #DCE2EE;            /* 表の見出し */
+  --hover: #FBFCF4;         /* カードのホバー */
+  --warn: #8A2B1F;          /* 注意文 */
+  --stripe-a: #ECEEF2;      /* 画像がないときの斜線 */
+  --stripe-b: #F7F8FA;
+  --overlay: rgba(19, 27, 54, .45);  /* メニューの背景 */
+
+  /* 書体 */
+  --jp: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Yu Gothic", system-ui, sans-serif;
+  --num: "Barlow Semi Condensed", "Zen Kaku Gothic New", system-ui, sans-serif;
+
+  /* 動き */
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --dur: .8s;               /* 基本の速さ */
+
+  color-scheme: light;
+}
+
+/* ---------- ナイトモード ---------- */
+html[data-theme="night"] {
+  --navy: #C8D2F0;          /* 夜は見出し・罫線を明るく */
+  --navy-fill: #27356F;
+  --navy-deep: #090E1D;
+  --lime-ink: #C3D95A;
+  --lime-soft: #2B3520;
+
+  --bg: #0E1426;
+  --panel: #161E3A;
+  --ink: #E4E8F2;
+  --ink-soft: #A8B0C5;
+  --line: #2C3760;
+  --line-strong: #48557F;
+
+  --sub: #1D2648;
+  --th: #222C55;
+  --hover: #1B2444;
+  --warn: #F2A08F;
+  --stripe-a: #1A2242;
+  --stripe-b: #141B35;
+  --overlay: rgba(3, 6, 15, .6);
+
+  color-scheme: dark;
+}
+
+/* ---------- 文字サイズ（メニューの 小・標準・大） ---------- */
+html[data-font="s"] {
+  font-size: 87.5%;
+}
+
+html[data-font="m"] {
+  font-size: 100%;
+}
+
+html[data-font="l"] {
+  font-size: 115%;
+}
+
+
+/* =========================================================
+   ベース（リセット・共通要素）
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--jp);
+  font-size: .9375rem;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .4s, color .4s;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* キーボード操作時のフォーカス */
+:focus-visible {
+  outline: 3px solid var(--lime);
+  outline-offset: 2px;
+}
+
+/* 「本文へ進む」リンク（フォーカス時のみ表示） */
+.skip {
+  position: absolute;
+  top: 0;
+  left: -999px;
+  z-index: 999;
+  padding: .6em 1em;
+  background: var(--navy-fill);
+  color: #fff;
+}
+
+.skip:focus {
+  top: 8px;
+  left: 8px;
+}
+
+/* 画面には出さず、読み上げだけする文字 */
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* メニューを開いている間は背景をスクロールさせない */
+html.menu-open,
+html.menu-open body {
+  overflow: hidden;
+}
+
+/* OSで「視差効果を減らす」を設定している人には動きを止める */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+
+/* =========================================================
+   ボタン
+   .btn          … 基本
+   .btn-primary  … ライム（電話で相談 など）
+   .btn-ghost    … 白地に紺の枠（LINEで相談 など）
+   .btn-sm       … 小さいボタン
+   ========================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55em;
+  min-height: 48px;
+  padding: .6em 1.4em;
+  border: 2px solid var(--navy);
+  border-radius: 999px;
+  font-size: .9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background .25s, color .25s, border-color .25s, transform .25s var(--ease);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  transition: transform .3s var(--ease);
+}
+
+.btn:hover svg {
+  transform: rotate(-8deg);
+}
+
+/* ---------- ライム ---------- */
+.btn-primary {
+  background: var(--lime);
+  border-color: var(--lime);
+  color: var(--navy-deep);
+}
+
+.btn-primary:hover {
+  background: var(--lime-hover);
+  border-color: var(--lime-hover);
+}
+
+/* ---------- 白地に紺の枠 ---------- */
+.btn-ghost {
+  background: var(--panel);
+  color: var(--navy);
+}
+
+.btn-ghost:hover {
+  background: var(--navy-fill);
+  color: #fff;
+}
+
+/* ---------- 小さいボタン ---------- */
+.btn-sm {
+  min-height: 40px;
+  padding: .4em 1.1em;
+  font-size: .82rem;
+}
+
+
+/* =========================================================
+   ロゴ（assets/logo/）
+   - カラー版：明るい背景　／　白版：濃紺・ナイトモードの背景
+   - ブランドガイドに沿い、縦横比の変更・回転・要素の追加はしない
+   - 大きさは高さ(height)だけで指定し、幅は自動
+   ========================================================= */
+
+.brand {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+  text-decoration: none;
+}
+
+.logo {
+  display: block;
+  width: auto;
+  max-width: none;
+  height: 30px;
+}
+
+/* デイ／ナイトでロゴを切り替える */
+.logo-night {
+  display: none;
+}
+
+html[data-theme="night"] .logo-day {
+  display: none;
+}
+
+html[data-theme="night"] .logo-night {
+  display: block;
+}
+
+/* 場所ごとの大きさ */
+.fixed-header .logo {
+  height: 38px;
+}
+
+.topbar .logo,
+.drawer-head .logo {
+  height: 30px;
+}
+
+.foot .logo {
+  height: 44px;
+}
+
+@media (max-width: 360px) {
+  .topbar .logo {
+    height: 24px;
+  }
+}

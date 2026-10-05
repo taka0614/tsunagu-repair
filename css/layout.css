@@ -1,0 +1,726 @@
+/* #########################################################
+   layout.css
+   レイアウト：分割・左パネル・ヘッダー・メニュー・スマホ用ドック
+
+   目次
+   - 分割レイアウト
+   - ヘッダー
+   - メニュー
+   - スマホ用：追従ドック
+   ######################################################### */
+
+
+/* =========================================================
+   分割レイアウト
+   PC  ：左＝固定パネル（58%）／右＝スクロール（42%）
+   スマホ：上＝ヒーロー画像／下＝コンテンツ（860px以下）
+   ========================================================= */
+
+.split {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* ---------- 左：固定パネル ---------- */
+.panel-fixed {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex: 0 0 58%;
+  flex-direction: column;
+  max-width: 58%;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--navy-deep);
+  color: #fff;
+}
+
+/* ---------- 右：スクロールパネル ---------- */
+.panel-scroll {
+  flex: 0 0 42%;
+  max-width: 42%;
+  border-left: 1px solid var(--navy);
+  background: var(--bg);
+}
+
+
+/* =========================================================
+   ステージ（左パネルの画像エリア）
+   .scene が data-scene ごとに重なり、表示中だけ .is-active
+   ========================================================= */
+
+.stage {
+  position: relative;
+  flex: 1;
+  margin: 1.3rem 1.6rem 0;
+  overflow: hidden;
+  border-radius: 6px;
+  background: #1B2546;
+}
+
+html[data-theme="night"] .stage {
+  background: #10172F;
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .7s ease;
+}
+
+.scene.is-active {
+  opacity: 1;
+}
+
+/* 写真 */
+.scene img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.8) contrast(1.05);
+}
+
+html[data-theme="night"] .scene img {
+  filter: saturate(.75) brightness(.8);
+}
+
+/* 写真がないときの代わり（ノートPCの線画） */
+.scene .fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 70% 30%, rgba(180, 207, 93, .16), transparent 55%),
+    #1B2546;
+}
+
+.scene .fallback svg {
+  width: min(62%, 460px);
+  height: auto;
+  color: #C9D2E8;
+}
+
+/* 写真をブランドの紺になじませる */
+.scene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(140deg,
+    rgba(28, 47, 103, .55) 0%,
+    rgba(28, 47, 103, .15) 60%,
+    rgba(28, 47, 103, .35) 100%);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* キャプションを読みやすくする下からの影 */
+.scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(13, 19, 40, .82) 0%, rgba(13, 19, 40, 0) 46%);
+}
+
+/* キャプション */
+.scene-text {
+  position: absolute;
+  right: 1.8rem;
+  bottom: 1.6rem;
+  left: 1.8rem;
+  z-index: 2;
+}
+
+.scene-text p:first-child {
+  font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+  font-weight: 900;
+  line-height: 1.45;
+  letter-spacing: .03em;
+}
+
+.scene-text p:last-child {
+  margin-top: .3rem;
+  font-size: .88rem;
+  opacity: .85;
+}
+
+
+/* =========================================================
+   canvas：基板の回路アニメーション（js/circuit.js が追加）
+   ========================================================= */
+
+.circuit {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: .8;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  /* 下部のキャプションに重ならないようフェードアウト */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 48%, transparent 80%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 48%, transparent 80%);
+}
+
+
+/* =========================================================
+   進捗ナビ（左パネル下部の 01 / 09 とバー）
+   ========================================================= */
+
+.index {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1rem 1.6rem 1.3rem;
+}
+
+.index-count {
+  font-family: var(--num);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+
+.index-count b {
+  color: var(--lime);
+  font-size: 1.6rem;
+}
+
+.index ol {
+  display: flex;
+  flex: 1;
+  gap: 4px;
+}
+
+.index li {
+  flex: 1;
+}
+
+.index a {
+  display: block;
+  padding: 10px 0;
+  text-decoration: none;
+}
+
+.index a span {
+  display: block;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, .22);
+  transition: background .3s;
+}
+
+.index a:hover span {
+  background: rgba(255, 255, 255, .5);
+}
+
+.index a.is-active span {
+  background: var(--lime);
+}
+
+.index-label {
+  min-width: 9em;
+  font-size: .82rem;
+  text-align: right;
+  opacity: .9;
+}
+
+
+/* =========================================================
+   スマホ（860px以下）
+   ========================================================= */
+
+@media (max-width: 860px) {
+  .split {
+    flex-direction: column;
+  }
+
+  .panel-fixed {
+    position: static;
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 100%;
+    height: 52vh;
+    min-height: 320px;
+  }
+
+  .panel-scroll {
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 100%;
+    border-left: none;
+    /* 最後のコンテンツが下部のドックに隠れないように */
+    padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .stage {
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .scene-text {
+    right: 1.1rem;
+    bottom: 1.1rem;
+    left: 1.1rem;
+  }
+
+  .circuit {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 88%);
+            mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 88%);
+  }
+
+  .index {
+    display: none;
+  }
+}
+
+
+/* =========================================================
+   ヘッダー
+   .fixed-header … PC：左パネルの上部（背景は常に濃紺）
+   .topbar       … スマホ：画面上部に固定
+   ※ 文字サイズ設定（小・標準・大）で崩れないよう、すべて px で固定
+   ========================================================= */
+
+/* ---------- PC：左パネルの上部 ---------- */
+.fixed-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 21px 26px 0;
+}
+
+/* ---------- スマホ：上部バー ---------- */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: none;            /* PCでは非表示 */
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--navy);
+}
+
+/* ---------- 右側のボタン群（電話・MENU） ---------- */
+.head-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.head-actions .btn-sm {
+  gap: 8px;
+  min-height: 40px;
+  padding: 6px 18px;
+  font-size: 13px;
+}
+
+/* ---------- MENU ボタン（ハンバーガー） ---------- */
+.menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 6px 0 10px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.fixed-header .menu-btn {
+  color: #fff;
+}
+
+.topbar .menu-btn {
+  color: var(--navy);
+}
+
+.menu-txt {
+  font-family: var(--num);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+
+.topbar .menu-txt {
+  display: none;            /* スマホは「≡」だけ */
+}
+
+.menu-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 24px;
+}
+
+.menu-lines i {
+  display: block;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+  transition: transform .3s var(--ease), width .3s;
+}
+
+.menu-lines i:nth-child(2) {
+  width: 70%;
+  margin-left: auto;
+}
+
+.menu-btn:hover .menu-lines i:nth-child(2) {
+  width: 100%;
+}
+
+/* ---------- スマホ（860px以下） ---------- */
+@media (max-width: 860px) {
+  html {
+    scroll-padding-top: 76px;   /* ページ内リンクで見出しが上部バーに隠れないように */
+  }
+
+  .topbar {
+    display: flex;
+  }
+
+  .fixed-header {
+    display: none;
+  }
+}
+
+
+/* =========================================================
+   メニュー（右からスライドするドロワー）
+   ページ内リンク・文字サイズ・表示モード・相談ボタン
+   ========================================================= */
+
+/* ---------- 背景の暗幕 ---------- */
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: var(--overlay);
+  opacity: 0;
+  transition: opacity .35s;
+}
+
+.drawer-overlay.is-open {
+  opacity: 1;
+}
+
+/* ---------- 本体 ---------- */
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  width: min(420px, 100%);
+  padding: 1.2rem 1.6rem 2rem;
+  overflow-y: auto;
+  border-left: 1.5px solid var(--navy);
+  background: var(--panel);
+  color: var(--ink);
+  transform: translateX(100%);
+  transition: transform .45s var(--ease);
+}
+
+.drawer.is-open {
+  transform: none;
+}
+
+/* ---------- ロゴと閉じるボタン ---------- */
+.drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--navy);
+}
+
+.drawer-close {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: none;
+  color: var(--navy);
+  cursor: pointer;
+}
+
+.drawer-close span::before,
+.drawer-close span::after {
+  content: "";
+  position: absolute;
+  top: 21px;
+  right: 10px;
+  left: 10px;
+  height: 2px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+.drawer-close span::after {
+  transform: rotate(-45deg);
+}
+
+/* ---------- ページ内リンク ---------- */
+.drawer-nav ol {
+  border-top: 1.5px solid var(--navy);
+}
+
+.drawer-nav li {
+  border-bottom: 1px solid var(--line);
+}
+
+.drawer-nav a {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .85rem .2rem;
+  color: var(--navy);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color .2s, padding .25s;
+}
+
+.drawer-nav a span {
+  width: 1.6em;
+  color: var(--lime-ink);
+  font-family: var(--num);
+}
+
+.drawer-nav a:hover {
+  padding-left: .6rem;
+  color: var(--lime-ink);
+}
+
+.drawer-nav a[aria-current="true"] {
+  color: var(--lime-ink);
+}
+
+/* ---------- 設定（文字サイズ・表示モード） ---------- */
+.drawer-settings {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.setting-h {
+  margin-bottom: .45rem;
+  color: var(--ink-soft);
+  font-size: .82rem;
+  font-weight: 700;
+}
+
+/* 切り替えボタンのグループ */
+.seg {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  gap: 3px;
+  padding: 3px;
+  border: 1.5px solid var(--navy);
+  border-radius: 999px;
+}
+
+.seg button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4em;
+  min-height: 42px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--navy);
+  font: inherit;
+  font-size: .85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .25s, color .25s;
+}
+
+.seg button:hover {
+  background: var(--sub);
+}
+
+.seg button[aria-pressed="true"] {
+  background: var(--navy-fill);
+  color: #fff;
+}
+
+.seg svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* 文字サイズボタンの「A」 */
+.fs-s,
+.fs-m,
+.fs-l {
+  font-family: var(--num);
+  line-height: 1;
+}
+
+.fs-s {
+  font-size: .8em;
+}
+
+.fs-m {
+  font-size: 1em;
+}
+
+.fs-l {
+  font-size: 1.25em;
+}
+
+/* ---------- 相談ボタン ---------- */
+.drawer-cta {
+  display: grid;
+  gap: .6rem;
+  margin-top: auto;
+}
+
+
+/* =========================================================
+   スマホ用：追従ドック（画面下部）
+   ヒーロー画像が画面外に出ると下から表示（js/main.js）
+   回路アニメーション＋現在地＋ページの進み具合
+   ========================================================= */
+
+.dock {
+  display: none;            /* PCでは非表示 */
+}
+
+@media (max-width: 860px) {
+  .dock {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 45;
+    display: block;
+    height: calc(68px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);  /* iPhoneのホームバー分 */
+    overflow: hidden;
+    border-top: 1px solid rgba(180, 207, 93, .35);
+    background: var(--navy-deep);
+    box-shadow: 0 -6px 20px rgba(9, 14, 29, .18);
+    color: #fff;
+    visibility: hidden;
+    transform: translateY(110%);
+    transition: transform .45s var(--ease), visibility 0s .45s;
+  }
+
+  .dock.is-show {
+    visibility: visible;
+    transform: none;
+    transition: transform .45s var(--ease), visibility 0s;
+  }
+
+  /* ---------- 回路アニメーションの描画エリア ---------- */
+  .dock-canvas {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: env(safe-area-inset-bottom, 0px);
+    left: 0;
+  }
+
+  .dock .circuit {
+    opacity: 1;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 45%);
+            mask-image: linear-gradient(to right, transparent 0%, #000 45%);
+  }
+
+  /* ---------- 現在地（番号・ラベル・キャプション） ---------- */
+  .dock-info {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 68px;
+    padding: 0 16px;
+    background: linear-gradient(to right,
+      var(--navy-deep) 0%,
+      var(--navy-deep) 40%,
+      rgba(19, 27, 54, 0) 75%);
+    pointer-events: none;
+  }
+
+  .dock-num {
+    color: var(--lime);
+    font-family: var(--num);
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1;
+    transition: opacity .3s, transform .3s;
+  }
+
+  .dock-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    line-height: 1.35;
+  }
+
+  .dock-label {
+    font-size: 13px;
+    font-weight: 700;
+    transition: opacity .3s;
+  }
+
+  .dock-cap {
+    max-width: 56vw;
+    overflow: hidden;
+    font-size: 11px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: .75;
+    transition: opacity .3s;
+  }
+
+  /* セクション切替中は一瞬消す */
+  .dock.is-changing .dock-num {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  .dock.is-changing .dock-label,
+  .dock.is-changing .dock-cap {
+    opacity: 0;
+  }
+
+  /* ---------- ページの進み具合（上端のバー） ---------- */
+  .dock-bar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 3;
+    height: 2px;
+    background: rgba(255, 255, 255, .12);
+  }
+
+  .dock-bar i {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--lime);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+}
